@@ -1,0 +1,16 @@
+Eclipse 계열에서 Export > Runnable JAR File 로 실행용 jar 파일을 만들 땐 꼭 Run As > Java Application 으로 한 번 실행해서 해당 실행 스크립트를 만든 뒤 시도해야한다.
+그리고 꼭 프로젝트명에서 오른쪽 클릭후 실행하는게 아니라 실행할 main() 이 있는 클래스 이름에서 Run as 를 선택해서 실행해야한다.
+
+그래야 Export할 때 Launch configuration에 목록이 만들어진다.
+
+Library handling 옵션은
+1. Extract required libraries into generated JAR
+    필수 라이브러리들을 추출해서 내부로 포함.
+
+2. Package required libraries into generated JAR
+    필수 라이브러리들을 전부 패키지로 Jar 내부로 포함.
+
+3. Copy required libraries into sub-folder next to the generated JAR
+    필수 라이브러리들을 전부 Jar 외부의 하위 경로로 복사하고  class-path로 참조한다. 필수 라이브러리들은 생성할 JAR파일명_lib 에 저장한다.
+
+    1번이 가장 무난한 타입이다.
