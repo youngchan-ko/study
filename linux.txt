@@ -36,6 +36,17 @@ app.exe처럼 실행명령을 할수없는 권한을 가지고있다.
 
 
 3. Apache Tomcat 설치하기
+디렉토리 만들기
+sudo mkdir /home/tomcat
+압축풀기
+sudo tar xvfz apache-tomcat-9.0.56.tar.gz
+압축파일 지우기
+sudo rm -rf apache-tomcat-9.0.56.tar.gz
+환경변수 설정위해 
+sudo nano etc/profile
+설정파일 제일 밑에 추가
+export CATALINA_HOME=/home/tomcat 
+
 
 4. firewall 설치후에 8080포트로 들어갈수있게 설정 변경
     기본적으로 리눅스는 외부에서 접속을 차단하게 설정이 되어있기때문에 이걸 해줘야 외부 다른 컴퓨터에서 접속이 가능해짐.
@@ -125,3 +136,7 @@ app.exe처럼 실행명령을 할수없는 권한을 가지고있다.
     systemctl restart mysql.service
 
 14. HeidiSql로 서버 아이디 입력하고 아이디 비번 치고 들어가서 데이터베이스 임포트 해오면 됨.
+
+asdkhabwhaslb
+asodb
+asdjbqwpoiu
