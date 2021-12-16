@@ -85,6 +85,45 @@ app.exe처럼 실행명령을 할수없는 권한을 가지고있다.
     일단 여기까지 해서 고양이 봤음!!!!!!!!!!
     나중에 필요할경우 밑에 환경설정 해보자
 
+    유저 생성
+    sudo groupadd tomcat
+    sudo useradd -M -s /bin/nologin -g tomcat -d /opt/tomcat tomcat 
+
+    유저 접근권한 설정
+    sudo chgrp -R tomcat /usr/local/tomcat9
+    sudo chown -R tomcat /usr/local/tomcat9
+
+    서비스 파일 설정
+    sudo nano /etc/systemd/system/tomcat.service
+    이 파일 불러와서
+    아래꺼 붙여주기
+
+[Unit]
+Description=Apache Tomcat
+After=network.target
+[Service]
+Type=forking
+Environment=CATALINA_PID=/usr/local/tomcat9/temp/tomcat9.pid
+Environment=JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+Environment=CATALINA_HOME=/usr/local/tomcat9
+Environment=CATALINA_BASE=/usr/local/tomcat9
+Environment="CATALINA_OPTS=-Xms512m -Xmx1G"
+Environment="JAVA_OPTS=-Dfile.encoding=UTF-8 -Djava.awt.headless=true"
+
+ExecStart=/usr/local/tomcat9/bin/startup.sh
+ExecStop=/usr/local/tomcat9/bin/shutdown.sh
+User=tomcat
+Group=tomcat
+[Install]
+WantedBy=multi-user.target
+
+    톰캣 자동실행
+    sudo systemctl daemon-reload
+    sudo systemctl start tomcat
+    sudo systemctl enable tomcat
+
+    systemctl status tomcat.service
+
     혹시 나중에 파일질라 파일 전송이 안될경우 이거 해보기!!!!!!!!!!!!!!!!!!!!!!!!!!
     sudo chmod 777 /usr/local
     아니면 그냥 ubuntu폴더에 옮기고 그다음 터미널에서 
@@ -193,6 +232,3 @@ app.exe처럼 실행명령을 할수없는 권한을 가지고있다.
 
 14. HeidiSql로 서버 아이디 입력하고 아이디 비번 치고 들어가서 데이터베이스 임포트 해오면 됨.
 
-asdkhabwhaslb
-asodb
-asdjbqwpoiu
