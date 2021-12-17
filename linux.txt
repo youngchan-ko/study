@@ -99,21 +99,24 @@ app.exe처럼 실행명령을 할수없는 권한을 가지고있다.
     아래꺼 붙여주기
 
 [Unit]
-Description=Apache Tomcat
-After=network.target
+Description=Tomcat Server
+After=syslog.target network.target
+
 [Service]
 Type=forking
-Environment=CATALINA_PID=/usr/local/tomcat9/temp/tomcat9.pid
-Environment=JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-Environment=CATALINA_HOME=/usr/local/tomcat9
-Environment=CATALINA_BASE=/usr/local/tomcat9
-Environment="CATALINA_OPTS=-Xms512m -Xmx1G"
-Environment="JAVA_OPTS=-Dfile.encoding=UTF-8 -Djava.awt.headless=true"
-
-ExecStart=/usr/local/tomcat9/bin/startup.sh
-ExecStop=/usr/local/tomcat9/bin/shutdown.sh
 User=tomcat
 Group=tomcat
+
+Environment=CATALINA_HOME=/usr/local/tomcat9
+Environment=CATALINA_BASE=/usr/local/tomcat9
+Environment=CATALINA_PID=/usr/local/tomcat9/temp/tomcat.pid
+
+ExecStart=/usr/local/tomcat9/bin/catalina.sh start
+ExecStop=/usr/local/tomcat9/bin/catalina.sh stop
+
+RestartSec=12
+Restart=always
+
 [Install]
 WantedBy=multi-user.target
 
@@ -232,3 +235,15 @@ WantedBy=multi-user.target
 
 14. HeidiSql로 서버 아이디 입력하고 아이디 비번 치고 들어가서 데이터베이스 임포트 해오면 됨.
 
+위에 링크대로 하는 방법은요
+서버에 자바는 먼저 설치를 하고
+톰캣은 설치하지 않고
+/bin/sh/run.sh
+파일에 쉘스크립트를 써 넣는거지요?
+
+PATH_TO_JAR=실행할 JAR 파일 path.jar
+
+여기에 jar파일 위치를 아무데나 설정해놔도 괜찮나요?
+
+그리고 임베디드 톰캣을 사용할려면 지금 만들어둔 어플리케이션을 
+수정해야 하는거지요?
