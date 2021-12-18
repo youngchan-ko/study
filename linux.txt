@@ -12,13 +12,14 @@ app.exe처럼 실행명령을 할수없는 권한을 가지고있다.
 따라서 어플리케이션 구동도 할수없다.
 
 1. Ubuntu에서 Java 설치하기
+    sudo apt-get update
     sudo apt install openjdk-8-jdk
     설치가 됐는지 버전 확인
     java -version
     javac -version
 
     설치 경로 확인하기
-    which Java
+    which java
     결과값이 
     /usr/bin/java라고 나온다.
     하지만 이걸 
@@ -52,7 +53,7 @@ app.exe처럼 실행명령을 할수없는 권한을 가지고있다.
     저장하고 나와서
     
     프로필 리로드
-    source /etc/profile 
+    source /etc/profilesource /etc/profile 
     서버 재시작
     sudo reboot now
 
@@ -235,15 +236,45 @@ WantedBy=multi-user.target
 
 14. HeidiSql로 서버 아이디 입력하고 아이디 비번 치고 들어가서 데이터베이스 임포트 해오면 됨.
 
-위에 링크대로 하는 방법은요
-서버에 자바는 먼저 설치를 하고
-톰캣은 설치하지 않고
-/bin/sh/run.sh
-파일에 쉘스크립트를 써 넣는거지요?
-
-PATH_TO_JAR=실행할 JAR 파일 path.jar
-
-여기에 jar파일 위치를 아무데나 설정해놔도 괜찮나요?
-
-그리고 임베디드 톰캣을 사용할려면 지금 만들어둔 어플리케이션을 
-수정해야 하는거지요?
+SERVICE_NAME=margit
+PATH_TO_JAR=/home/ubuntu/margitTest.jar
+PID_PATH_NAME=./margit.pid
+JAVA_OPT="-Xms2048m -Xmx2048m -XX:PermSize=256m -XX:MaxPermSize=512m"
+case $1 in
+    start)
+        echo "Starting $SERVICE_NAME ..."
+        if [ ! -f $PID_PATH_NAME ]; then
+            nohup java -jar $JAVA_OPT $PATH_TO_JAR >> /dev/null &
+                        echo $! > $PID_PATH_NAME
+            echo "$SERVICE_NAME started ..."
+        else
+            echo "$SERVICE_NAME is already running ..."
+        fi
+    ;;
+    stop)
+        if [ -f $PID_PATH_NAME ]; then
+            PID=$(cat $PID_PATH_NAME);
+            echo "$SERVICE_NAME stoping ..."
+            kill $PID;
+            echo "$SERVICE_NAME stopped ..."
+            rm $PID_PATH_NAME
+        else
+            echo "$SERVICE_NAME is not running ..."
+        fi
+    ;;
+    restart)
+        if [ -f $PID_PATH_NAME ]; then
+            PID=$(cat $PID_PATH_NAME);
+            echo "$SERVICE_NAME stopping ...";
+            kill $PID;
+            echo "$SERVICE_NAME stopped ...";
+            rm $PID_PATH_NAME
+            echo "$SERVICE_NAME starting ..."
+            nohup java -jar $JAVA_OPT $PATH_TO_JAR >> /dev/null &
+                        echo $! > $PID_PATH_NAME
+            echo "$SERVICE_NAME started ..."
+        else
+            echo "$SERVICE_NAME is not running ..."
+        fi
+    ;;
+esac
