@@ -152,7 +152,41 @@ sudo nano /etc/fstab
 free -h
 
 
-7. 스왑 파일을 만든 이후에 다시 접속을 하니 또 접속이 안된다.
-로그 확인 결과
-No auto configuration classes found in META-INF/spring.factories. If you are using a custom packaging, make sure that file is correct.
-이런 오류가 생긴다.
+7. run as 에서 maven build 
+골 옵션은 package
+그럼 target폴더 안에 jar파일이 보인다.
+(없을경우 메이븐 업데이트)
+
+8. mysql 설치
+다운로드
+wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.20-1_all.deb
+
+패키지설치
+sudo dpkg -i mysql-apt-config_0.8.20-1_all.deb
+
+업데이트
+sudo apt-get update
+mysql설치
+sudo apt-get install mysql-server
+
+자바 어플리케이션 안에서 mysql위치 바꿔주기
+(지금 어플리케이션에서는 application.yml 안에서 localhost에서 ip주소로 바꾸기)
+
+heidiSql에서 익스포트 메뉴에서
+데이터베이스 생성 체크
+테이블 생성 체크
+데이터 삽입 선택 후
+파일 만들기
+
+서버 mysql에서 임포트하기
+source /home/ubuntu/margitDB.sql
+
+
+
+
+
+
+내일 이거 해봐라
+서버 3306포트 열어주기
+아니면
+mysql에서 3306포트 열어주기

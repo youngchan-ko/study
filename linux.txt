@@ -186,6 +186,8 @@ WantedBy=multi-user.target
 10. 윈도우에서 접속이 되는지 확인
 
 11. mysql설치(시간이 오래걸림)
+    wget https://downloads.mysql.com/archives/get/p/23/file/mysql-server_8.0.18-1ubuntu18.04_amd64.deb-bundle.tar
+
     apt -y install mysql-server(-y는 중간에 물어보는거 그냥 yes로 설정)
 
     mysql 서비스 상태 확인
