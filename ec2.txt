@@ -178,9 +178,46 @@ heidiSql에서 익스포트 메뉴에서
 데이터 삽입 선택 후
 파일 만들기
 
+이렇게 하면 jpa에서는 엔티티 이름으로 테이블 이름을 만들기때문에 
+대소문자 구분이 필요해진다.
+하지만 mysql에서는 대소문자 구분 안하고 소문자로만 만듦.
+그래서 heidiSql에서 SQL내보내기를 한 sql파일을 vscode로 열어서 
+테이블 만드는 쿼리에서 직접 수동으로 카멜 표기법으로 바꿔줬다.
+그리고 Dao파일에서도 테이블 이름을 다 수정해줌.
+그래서 성공
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 서버 mysql에서 임포트하기
 source /home/ubuntu/margitDB.sql
 
+ec2 인스턴스 보안 인바운드 규칙 변경
+mysql 선택해서 3306포트 열어주기
+
+드디어 홈페이지 보임!!!!!!!!!!
+
+
+9. 어플리케이션에 지정된 이미지 폴더 서버에 만들기
+
+폴더 만들기
+sudo mkdir /폴더이름
+이렇게 만들기만 하면 루트에게만 권한이 있어서 업로드가 안됨.
+
+폴더에 권한 풀어주기
+sudo chmod 777 /폴더이름
+
+파일질라에서 업로드 하기
 
 
 
@@ -190,3 +227,33 @@ source /home/ubuntu/margitDB.sql
 서버 3306포트 열어주기
 아니면
 mysql에서 3306포트 열어주기
+
+
+
+
+
+
+
+성공
+Content-Disposition: attachment; 
+filename="gallery_img/2021/12/22/20211222234859placeimg_640_480_animals.jpg";
+Content-Length: 218031
+Content-Transfer-Encoding: binary
+Content-Type: image/jpeg;charset=UTF-8
+Date: Thu, 23 Dec 2021 00:19:08 GMT
+Expires: -1;
+Pragma: no-cache;
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+
+실패
+Content-Disposition: attachment; filename="gallery_img\2021\10\07\20211007233727VSeinlmai19-min.jpg";
+Content-Transfer-Encoding: binary
+Content-Type: application/json;charset=UTF-8
+Date: Thu, 23 Dec 2021 00:07:13 GMT
+Expires: -1;
+Pragma: no-cache;
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
